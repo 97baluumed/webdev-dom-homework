@@ -68,6 +68,8 @@
     const nameInput = document.querySelector('.add-form-name');
     const commentInput = document.querySelector('.add-form-text');
     const addButton = document.querySelector('.add-form-button');
+    let originalNameColor = nameInput.style.backgroundColor;
+    let originalCommentColor = commentInput.style.backgroundColor;
 
     nameInput.addEventListener('input', () => {
     });
@@ -76,6 +78,22 @@
     });
 
     addButton.addEventListener('click', () => {
+
+
+    if (nameInput.value === "") {
+      nameInput.style.backgroundColor = "red";
+      setTimeout(() => {
+      nameInput.style.backgroundColor = originalNameColor;
+      }, 2000);
+      return;
+    } else if (commentInput.value === "") {
+      commentInput.style.backgroundColor = "red";
+        setTimeout(() => {
+        commentInput.style.backgroundColor = originalCommentColor;
+        }, 2000);
+      return;
+    }
+
     const name = nameInput.value.trim();
     const commentText = commentInput.value.trim();
     
