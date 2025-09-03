@@ -83,19 +83,34 @@
     if (nameInput.value === "") {
       nameInput.style.backgroundColor = "red";
       setTimeout(() => {
-      nameInput.style.backgroundColor = originalNameColor;
-      }, 2000);
+        nameInput.style.backgroundColor = originalNameColor;
+        }, 2000);
       return;
     } else if (commentInput.value === "") {
       commentInput.style.backgroundColor = "red";
-        setTimeout(() => {
+      setTimeout(() => {
         commentInput.style.backgroundColor = originalCommentColor;
         }, 2000);
       return;
     }
+    const trimmedName = nameInput.value.trim();
+    const trimmedComment = commentInput.value.trim();
 
-    const name = nameInput.value.trim();
-    const commentText = commentInput.value.trim();
+    if (trimmedName === "") {
+      nameInput.style.backgroundColor = "red";
+      setTimeout(() => {
+        nameInput.style.backgroundColor = originalNameColor;
+      }, 2000);
+      return;
+    } else if (trimmedComment === "") {
+      commentInput.style.backgroundColor = "red";
+      setTimeout(() => {
+        commentInput.style.backgroundColor = originalCommentColor;
+        }, 2000);
+      return;
+    }
+    const name = trimmedName;
+    const commentText = trimmedComment;
     
     const currentDate = new Date();
     const formattedDate = currentDate.toLocaleString('ru-RU', {
@@ -106,20 +121,27 @@
         minute: '2-digit'
     });
 
+
+
     const newComment = `
-        <div class="comment">
-            <div class="comment-header">
-                <span class="comment-name">${name}</span>
-                <span class="comment-date">${formattedDate}</span>
+        <li class="comment">
+          <div class="comment-header">
+            <div>${name}</div>
+            <div>${formattedDate}</div>
+          </div>
+          <div class="comment-body">
+            <div class="comment-text">
+              ${commentText}
             </div>
-            <div class="comment-text">${commentText}</div>
-            <div class="comment-footer">
-              <div class="likes">
-                <span class="likes-counter">0</span>
-                <button class="like-button"></button>
-              </div>
-        </div>
-    `;
+          </div>
+          <div class="comment-footer">
+            <div class="likes">
+              <span class="likes-counter">0</span>
+              <button class="like-button"></button>
+            </div>
+          </div>
+        </li>
+      `;
 
     commentsList.innerHTML += newComment;
     nameInput.value = '';
