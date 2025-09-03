@@ -68,6 +68,7 @@
     const nameInput = document.querySelector('.add-form-name');
     const commentInput = document.querySelector('.add-form-text');
     const addButton = document.querySelector('.add-form-button');
+    const buttonLike = documet.querySelector(`.like-button`);
     let originalNameColor = nameInput.style.backgroundColor;
     let originalCommentColor = commentInput.style.backgroundColor;
 
@@ -77,6 +78,8 @@
     commentInput.addEventListener('input', () => {
     });
 
+    //buttonLike.addEventListener('clik', () => {    });
+
     addButton.addEventListener('click', () => {
 
 
@@ -84,13 +87,13 @@
       nameInput.style.backgroundColor = "red";
       setTimeout(() => {
         nameInput.style.backgroundColor = originalNameColor;
-        }, 2000);
+      }, 2000);
       return;
     } else if (commentInput.value === "") {
       commentInput.style.backgroundColor = "red";
       setTimeout(() => {
         commentInput.style.backgroundColor = originalCommentColor;
-        }, 2000);
+      }, 2000);
       return;
     }
     const trimmedName = nameInput.value.trim();
@@ -106,7 +109,7 @@
       commentInput.style.backgroundColor = "red";
       setTimeout(() => {
         commentInput.style.backgroundColor = originalCommentColor;
-        }, 2000);
+      }, 2000);
       return;
     }
     const name = trimmedName;
