@@ -70,13 +70,6 @@
     const addButton = document.querySelector('.add-form-button');
     let originalNameColor = nameInput.style.backgroundColor;
     let originalCommentColor = commentInput.style.backgroundColor;
-
-    //nameInput.addEventListener('input', () => {
-    //});
-
-    //commentInput.addEventListener('input', () => {
-    //});
-
     
     const comments = [
       {
@@ -142,7 +135,7 @@
               </div>
               <div class="comment-footer">
                 <div class="likes">
-                  <span class="likes-counter"data-index="${index}">${comment.quantityLikes}</span>
+                  <span class="likes-counter" data-index="${index}">${comment.quantityLikes}</span>
                   <button class="like-button" data-index="${index}"></button>
                 </div>
               </div>
@@ -198,6 +191,14 @@
           minute: '2-digit'
       });
 
+      comments.push({
+        name: name,
+        comment: commentText,
+        date: formattedDate,
+        quantityLikes: 0,
+        likes: false
+      });
+
       const newComment = `
           <li class="comment">
             <div class="comment-header">
@@ -222,7 +223,7 @@
       commentsList.innerHTML += newComment;
       nameInput.value = '';
       commentInput.value = '';
-      initLikeComments();
+      renderComments();
     });
   </script>
 </html>
