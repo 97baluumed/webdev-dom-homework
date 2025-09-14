@@ -91,6 +91,16 @@
       likes: true},
     ];
 
+    const initClickComments = () => {
+      const commentsElements = document.querySelectorAll("li");
+
+      for (const commentsElement of commentsElements) {
+        commentsElement.addEventListener("click", () => {
+          console.log("click");
+        })
+      }
+    }
+
     const renderComments = () => {
       const commentsHtml = comments.map(comment => {
         return `
@@ -119,10 +129,15 @@
           </li>
         `;
       }).join('');
+
       commentsList.innerHTML = commentsHtml;
+
+      initClickComments();
     };
 
     renderComments();
+
+
 
     
 
@@ -192,6 +207,7 @@
     commentsList.innerHTML += newComment;
     nameInput.value = '';
     commentInput.value = '';
+    initClickComments();
     });
   </script>
 </html>
