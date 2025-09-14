@@ -71,38 +71,58 @@
     let originalNameColor = nameInput.style.backgroundColor;
     let originalCommentColor = commentInput.style.backgroundColor;
 
-    nameInput.addEventListener('input', () => {
-    });
+    //nameInput.addEventListener('input', () => {
+    //});
 
-    commentInput.addEventListener('input', () => {
-    });
+    //commentInput.addEventListener('input', () => {
+    //});
 
     
     const comments = [
-      {name: "Глеб Фокин", 
-      comment: "Это будет первый комментарий на этой странице", 
-      date: "12.02.22 12:18",
-      quantityLikes: 3, 
-      likes: false},
-      {name: "Варвара Н.", 
-      comment: "Мне нравится как оформлена эта страница! ❤", 
-      date: "13.02.22 19:22",
-      quantityLikes: 75, 
-      likes: true},
+      {
+        name: "Глеб Фокин", 
+        comment: "Это будет первый комментарий на этой странице", 
+        date: "12.02.22 12:18",
+        quantityLikes: 3, 
+        likes: false
+      },
+      {
+        name: "Варвара Н.", 
+        comment: "Мне нравится как оформлена эта страница! ❤", 
+        date: "13.02.22 19:22",
+        quantityLikes: 75, 
+        likes: true
+      },
     ];
 
-    const initClickComments = () => {
-      const commentsElements = document.querySelectorAll("li");
+    const initLikeComments = () => {
+      for (const likeElement of document.querySelectorAll('.like-button')) {
+        const index = likeElement.dataset.index;
 
-      for (const commentsElement of commentsElements) {
-        commentsElement.addEventListener("click", () => {
-          console.log("click");
-        })
+        if (comments[index].likes) {
+          likeElement.classList.add('-active-like');
+        }
+
+        likeElement.addEventListener("click", () => {
+          const index = likeElement.dataset.index;
+                    
+          if (comments[index].likes) {
+            comments[index].quantityLikes--;
+            comments[index].likes = false;
+            likeElement.classList.remove('-active-like');
+          } else {
+            comments[index].quantityLikes++;
+            comments[index].likes = true;
+            likeElement.classList.add('-active-like');
+          }
+                    
+        renderComments();
+        });
       }
-    }
+    };
 
     const renderComments = () => {
-      const commentsHtml = comments.map(comment => {
+      const commentsHtml = comments.map((comment, index) => {
         return `
           <li class="comment">
               <div class="comment-header">
@@ -122,8 +142,8 @@
               </div>
               <div class="comment-footer">
                 <div class="likes">
-                  <span class="likes-counter">${comment.quantityLikes}</span>
-                  <button class="like-button"></button>
+                  <span class="likes-counter"data-index="${index}">${comment.quantityLikes}</span>
+                  <button class="like-button" data-index="${index}"></button>
                 </div>
               </div>
           </li>
@@ -131,83 +151,78 @@
       }).join('');
 
       commentsList.innerHTML = commentsHtml;
-
-      initClickComments();
+      initLikeComments();
     };
 
     renderComments();
 
-
-
-    
-
     addButton.addEventListener('click', () => {
-    if (nameInput.value === "") {
-      nameInput.style.backgroundColor = "red";
-      setTimeout(() => {
-        nameInput.style.backgroundColor = originalNameColor;
-      }, 2000);
-      return;
-    } else if (commentInput.value === "") {
-      commentInput.style.backgroundColor = "red";
-      setTimeout(() => {
-        commentInput.style.backgroundColor = originalCommentColor;
-      }, 2000);
-      return;
-    }
-    const trimmedName = nameInput.value.trim();
-    const trimmedComment = commentInput.value.trim();
+      if (nameInput.value === "") {
+        nameInput.style.backgroundColor = "red";
+        setTimeout(() => {
+          nameInput.style.backgroundColor = originalNameColor;
+        }, 2000);
+        return;
+      } else if (commentInput.value === "") {
+        commentInput.style.backgroundColor = "red";
+        setTimeout(() => {
+          commentInput.style.backgroundColor = originalCommentColor;
+        }, 2000);
+        return;
+      }
+      const trimmedName = nameInput.value.trim();
+      const trimmedComment = commentInput.value.trim();
 
-    if (trimmedName === "") {
-      nameInput.style.backgroundColor = "red";
-      setTimeout(() => {
-        nameInput.style.backgroundColor = originalNameColor;
-      }, 2000);
-      return;
-    } else if (trimmedComment === "") {
-      commentInput.style.backgroundColor = "red";
-      setTimeout(() => {
-        commentInput.style.backgroundColor = originalCommentColor;
-      }, 2000);
-      return;
-    }
-    const name = trimmedName;
-    const commentText = trimmedComment;
+      if (trimmedName === "") {
+        nameInput.style.backgroundColor = "red";
+        setTimeout(() => {
+          nameInput.style.backgroundColor = originalNameColor;
+        }, 2000);
+        return;
+      } else if (trimmedComment === "") {
+        commentInput.style.backgroundColor = "red";
+        setTimeout(() => {
+          commentInput.style.backgroundColor = originalCommentColor;
+        }, 2000);
+        return;
+      }
+      const name = trimmedName;
+      const commentText = trimmedComment;
+      
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleString('ru-RU', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit'
+      });
+
+      const newComment = `
+          <li class="comment">
+            <div class="comment-header">
+              <div>${name}</div>
+              <div>${formattedDate}</div>
+            </div>
+            <div class="comment-body">
+              <div class="comment-text">
+                ${commentText}
+              </div>
+            </div>
+            <div class="comment-footer">
+              <div class="likes">
+                <span class="likes-counter">0</span>
+                <button class="like-button"></button>
+              </div>
+            </div>
+          </li>
+        `;
+
     
-    const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleString('ru-RU', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-
-    const newComment = `
-        <li class="comment">
-          <div class="comment-header">
-            <div>${name}</div>
-            <div>${formattedDate}</div>
-          </div>
-          <div class="comment-body">
-            <div class="comment-text">
-              ${commentText}
-            </div>
-          </div>
-          <div class="comment-footer">
-            <div class="likes">
-              <span class="likes-counter">0</span>
-              <button class="like-button"></button>
-            </div>
-          </div>
-        </li>
-      `;
-
-  
-    commentsList.innerHTML += newComment;
-    nameInput.value = '';
-    commentInput.value = '';
-    initClickComments();
+      commentsList.innerHTML += newComment;
+      nameInput.value = '';
+      commentInput.value = '';
+      initLikeComments();
     });
   </script>
 </html>
