@@ -97,6 +97,7 @@
         }
 
         likeElement.addEventListener("click", () => {
+          event.stopPropagation();
           const index = likeElement.dataset.index;
                     
           if (comments[index].likes) {
@@ -113,6 +114,21 @@
         });
       }
     };
+
+    const initCommentsListener = () => {
+      const commentsElements = document.querySelectorAll('.comment');
+
+      for (const commentElement of commentsElements) {
+          commentElement.addEventListener("click", (event) => {
+              if (event.target.closest('.like-button')) return;
+              const commentText = commentElement.querySelector('.comment-text').innerText;
+              const commentName = commentElement.querySelector('.comment-header div:first-child').innerText;
+              
+              nameInput.value = `Ответ пользователю ${commentName} > от`;
+              commentInput.value = `${commentText} >\n\n`;
+          });
+        };
+      };
 
     const renderComments = () => {
       const commentsHtml = comments.map((comment, index) => {
@@ -145,6 +161,7 @@
 
       commentsList.innerHTML = commentsHtml;
       initLikeComments();
+      initCommentsListener();
     };
 
     renderComments();
@@ -163,8 +180,8 @@
         }, 2000);
         return;
       }
-      const trimmedName = nameInput.value.trim();
-      const trimmedComment = commentInput.value.trim();
+      const trimmedName = nameInput.value.trim().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+      const trimmedComment = commentInput.value.trim().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 
       if (trimmedName === "") {
         nameInput.style.backgroundColor = "red";
