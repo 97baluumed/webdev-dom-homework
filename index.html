@@ -70,6 +70,9 @@
     const addButton = document.querySelector('.add-form-button');
     let originalNameColor = nameInput.style.backgroundColor;
     let originalCommentColor = commentInput.style.backgroundColor;
+    const sanitizeHtml = (value) => {
+      return value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    }
     
     const comments = [
       {
@@ -124,8 +127,7 @@
               const commentText = commentElement.querySelector('.comment-text').innerText;
               const commentName = commentElement.querySelector('.comment-header div:first-child').innerText;
               
-              nameInput.value = `Ответ пользователю ${commentName} > от `;
-              commentInput.value = `${commentText} > \n\n`;
+              commentInput.value = `Ответ пользователю ${commentName}: ${commentText} > `;
           });
         };
       };
@@ -167,6 +169,7 @@
     renderComments();
 
     addButton.addEventListener('click', () => {
+
       if (nameInput.value === "") {
         nameInput.style.backgroundColor = "red";
         setTimeout(() => {
@@ -180,8 +183,8 @@
         }, 2000);
         return;
       }
-      const trimmedName = nameInput.value.trim().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-      const trimmedComment = commentInput.value.trim().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+      const trimmedName = nameInput.value.trim();
+      const trimmedComment = commentInput.value.trim();
 
       if (trimmedName === "") {
         nameInput.style.backgroundColor = "red";
@@ -209,8 +212,8 @@
       });
 
       comments.push({
-        name: name,
-        comment: commentText,
+        name: sanitizeHtml(name),
+        comment: sanitizeHtml(commentText),
         date: formattedDate,
         quantityLikes: 0,
         likes: false
