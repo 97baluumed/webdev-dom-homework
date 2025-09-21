@@ -1,9 +1,9 @@
-//const commentsList = document.querySelector('.comments');
-//const nameInput = document.querySelector('.add-form-name');
-//const commentInput = document.querySelector('.add-form-text');
-//const addButton = document.querySelector('.add-form-button');
-//let originalNameColor = nameInput.style.backgroundColor;
-//let originalCommentColor = commentInput.style.backgroundColor;
+const commentsList = document.querySelector('.comments');
+const nameInput = document.querySelector('.add-form-name');
+const commentInput = document.querySelector('.add-form-text');
+const addButton = document.querySelector('.add-form-button');
+let originalNameColor = nameInput.style.backgroundColor;
+let originalCommentColor = commentInput.style.backgroundColor;
 
 const sanitizeHtml = (value) => {
       return value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
@@ -101,7 +101,7 @@ const renderComments = () => {
       initCommentsListener();
 };
 
-//renderComments();
+renderComments();
 
 addButton.addEventListener('click', () => {
 
