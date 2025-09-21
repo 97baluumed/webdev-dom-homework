@@ -99,7 +99,7 @@
           likeElement.classList.add('-active-like');
         }
 
-        likeElement.addEventListener("click", () => {
+        likeElement.addEventListener("click", (event) => {
           event.stopPropagation();
           const index = likeElement.dataset.index;
                     
