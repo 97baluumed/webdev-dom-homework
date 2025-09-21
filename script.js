@@ -1,15 +1,15 @@
-const commentsList = document.querySelector('.comments');
-    const nameInput = document.querySelector('.add-form-name');
-    const commentInput = document.querySelector('.add-form-text');
-    const addButton = document.querySelector('.add-form-button');
-    let originalNameColor = nameInput.style.backgroundColor;
-    let originalCommentColor = commentInput.style.backgroundColor;
-    
-    const sanitizeHtml = (value) => {
+//const commentsList = document.querySelector('.comments');
+//const nameInput = document.querySelector('.add-form-name');
+//const commentInput = document.querySelector('.add-form-text');
+//const addButton = document.querySelector('.add-form-button');
+//let originalNameColor = nameInput.style.backgroundColor;
+//let originalCommentColor = commentInput.style.backgroundColor;
+
+const sanitizeHtml = (value) => {
       return value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-    }
-    
-    const comments = [
+}
+
+const comments = [
       {
         name: "Глеб Фокин", 
         comment: "Это будет первый комментарий на этой странице", 
@@ -24,9 +24,9 @@ const commentsList = document.querySelector('.comments');
         quantityLikes: 75, 
         likes: true
       },
-    ];
+];
 
-    const initLikeComments = () => {
+const initLikeComments = () => {
       for (const likeElement of document.querySelectorAll('.like-button')) {
         const index = likeElement.dataset.index;
 
@@ -51,9 +51,9 @@ const commentsList = document.querySelector('.comments');
         renderComments();
         });
       }
-    };
+};
 
-    const initCommentsListener = () => {
+const initCommentsListener = () => {
       const commentsElements = document.querySelectorAll('.comment');
 
       for (const commentElement of commentsElements) {
@@ -65,9 +65,9 @@ const commentsList = document.querySelector('.comments');
               commentInput.value = `Ответ пользователю ${commentName}: ${commentText} > `;
           });
         };
-      };
+};
 
-    const renderComments = () => {
+const renderComments = () => {
       const commentsHtml = comments.map((comment, index) => {
         return `
           <li class="comment">
@@ -99,11 +99,11 @@ const commentsList = document.querySelector('.comments');
       commentsList.innerHTML = commentsHtml;
       initLikeComments();
       initCommentsListener();
-    };
+};
 
-    renderComments();
+//renderComments();
 
-    addButton.addEventListener('click', () => {
+addButton.addEventListener('click', () => {
 
       if (nameInput.value === "") {
         nameInput.style.backgroundColor = "red";
@@ -179,4 +179,4 @@ const commentsList = document.querySelector('.comments');
       nameInput.value = '';
       commentInput.value = '';
       renderComments();
-    });
+});
