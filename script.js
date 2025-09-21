@@ -1,85 +1,92 @@
-const commentsList = document.querySelector('.comments');
-const nameInput = document.querySelector('.add-form-name');
-const commentInput = document.querySelector('.add-form-text');
-const addButton = document.querySelector('.add-form-button');
-let originalNameColor = nameInput.style.backgroundColor;
-let originalCommentColor = commentInput.style.backgroundColor;
+const commentsList = document.querySelector('.comments')
+const nameInput = document.querySelector('.add-form-name')
+const commentInput = document.querySelector('.add-form-text')
+const addButton = document.querySelector('.add-form-button')
+let originalNameColor = nameInput.style.backgroundColor
+let originalCommentColor = commentInput.style.backgroundColor
 
 const sanitizeHtml = (value) => {
-      return value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    return value.replaceAll('<', '&lt;').replaceAll('>', '&gt;')
 }
 
 const comments = [
-      {
-        name: "Глеб Фокин", 
-        comment: "Это будет первый комментарий на этой странице", 
-        date: "12.02.22 12:18",
-        quantityLikes: 3, 
-        likes: false
-      },
-      {
-        name: "Варвара Н.", 
-        comment: "Мне нравится как оформлена эта страница! ❤", 
-        date: "13.02.22 19:22",
-        quantityLikes: 75, 
-        likes: true
-      },
-];
+    {
+        name: 'Глеб Фокин',
+        comment: 'Это будет первый комментарий на этой странице',
+        date: '12.02.22 12:18',
+        quantityLikes: 3,
+        likes: false,
+    },
+    {
+        name: 'Варвара Н.',
+        comment: 'Мне нравится как оформлена эта страница! ❤',
+        date: '13.02.22 19:22',
+        quantityLikes: 75,
+        likes: true,
+    },
+]
 
 const initLikeComments = () => {
-      for (const likeElement of document.querySelectorAll('.like-button')) {
-        const index = likeElement.dataset.index;
+    for (const likeElement of document.querySelectorAll('.like-button')) {
+        const index = likeElement.dataset.index
 
         if (comments[index].likes) {
-          likeElement.classList.add('-active-like');
+            likeElement.classList.add('-active-like')
         }
 
-        likeElement.addEventListener("click", (event) => {
-          event.stopPropagation();
-          const index = likeElement.dataset.index;
-                    
-          if (comments[index].likes) {
-            comments[index].quantityLikes--;
-            comments[index].likes = false;
-            likeElement.classList.remove('-active-like');
-          } else {
-            comments[index].quantityLikes++;
-            comments[index].likes = true;
-            likeElement.classList.add('-active-like');
-          }
-                    
-        renderComments();
-        });
-      }
-};
+        likeElement.addEventListener('click', (event) => {
+            event.stopPropagation()
+            const index = likeElement.dataset.index
+
+            if (comments[index].likes) {
+                comments[index].quantityLikes--
+                comments[index].likes = false
+                likeElement.classList.remove('-active-like')
+            } else {
+                comments[index].quantityLikes++
+                comments[index].likes = true
+                likeElement.classList.add('-active-like')
+            }
+
+            renderComments()
+        })
+    }
+}
 
 const initCommentsListener = () => {
-      const commentsElements = document.querySelectorAll('.comment');
+    const commentsElements = document.querySelectorAll('.comment')
 
-      for (const commentElement of commentsElements) {
-          commentElement.addEventListener("click", (event) => {
-              if (event.target.closest('.like-button')) return;
-              const commentText = commentElement.querySelector('.comment-text').innerText;
-              const commentName = commentElement.querySelector('.comment-header div:first-child').innerText;
-              
-              commentInput.value = `Ответ пользователю ${commentName}: ${commentText} > `;
-          });
-        };
-};
+    for (const commentElement of commentsElements) {
+        commentElement.addEventListener('click', (event) => {
+            if (event.target.closest('.like-button')) return
+            const commentText =
+                commentElement.querySelector('.comment-text').innerText
+            const commentName = commentElement.querySelector(
+                '.comment-header div:first-child',
+            ).innerText
+
+            commentInput.value = `Ответ пользователю ${commentName}: ${commentText} > `
+        })
+    }
+}
 
 const renderComments = () => {
-      const commentsHtml = comments.map((comment, index) => {
-        return `
+    const commentsHtml = comments
+        .map((comment, index) => {
+            return `
           <li class="comment">
               <div class="comment-header">
                 <div>${comment.name}</div>
-                  <div>${comment.date || new Date().toLocaleString('ru-RU', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                  })}</div>
+                  <div>${
+                      comment.date ||
+                      new Date().toLocaleString('ru-RU', {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                      })
+                  }</div>
                 </div>
               <div class="comment-body">
                 <div class="comment-text">
@@ -93,68 +100,68 @@ const renderComments = () => {
                 </div>
               </div>
           </li>
-        `;
-      }).join('');
+        `
+        })
+        .join('')
 
-      commentsList.innerHTML = commentsHtml;
-      initLikeComments();
-      initCommentsListener();
-};
+    commentsList.innerHTML = commentsHtml
+    initLikeComments()
+    initCommentsListener()
+}
 
-renderComments();
+renderComments()
 
 addButton.addEventListener('click', () => {
+    if (nameInput.value === '') {
+        nameInput.style.backgroundColor = 'red'
+        setTimeout(() => {
+            nameInput.style.backgroundColor = originalNameColor
+        }, 2000)
+        return
+    } else if (commentInput.value === '') {
+        commentInput.style.backgroundColor = 'red'
+        setTimeout(() => {
+            commentInput.style.backgroundColor = originalCommentColor
+        }, 2000)
+        return
+    }
+    const trimmedName = nameInput.value.trim()
+    const trimmedComment = commentInput.value.trim()
 
-      if (nameInput.value === "") {
-        nameInput.style.backgroundColor = "red";
+    if (trimmedName === '') {
+        nameInput.style.backgroundColor = 'red'
         setTimeout(() => {
-          nameInput.style.backgroundColor = originalNameColor;
-        }, 2000);
-        return;
-      } else if (commentInput.value === "") {
-        commentInput.style.backgroundColor = "red";
+            nameInput.style.backgroundColor = originalNameColor
+        }, 2000)
+        return
+    } else if (trimmedComment === '') {
+        commentInput.style.backgroundColor = 'red'
         setTimeout(() => {
-          commentInput.style.backgroundColor = originalCommentColor;
-        }, 2000);
-        return;
-      }
-      const trimmedName = nameInput.value.trim();
-      const trimmedComment = commentInput.value.trim();
+            commentInput.style.backgroundColor = originalCommentColor
+        }, 2000)
+        return
+    }
+    const name = trimmedName
+    const commentText = trimmedComment
 
-      if (trimmedName === "") {
-        nameInput.style.backgroundColor = "red";
-        setTimeout(() => {
-          nameInput.style.backgroundColor = originalNameColor;
-        }, 2000);
-        return;
-      } else if (trimmedComment === "") {
-        commentInput.style.backgroundColor = "red";
-        setTimeout(() => {
-          commentInput.style.backgroundColor = originalCommentColor;
-        }, 2000);
-        return;
-      }
-      const name = trimmedName;
-      const commentText = trimmedComment;
-      
-      const currentDate = new Date();
-      const formattedDate = currentDate.toLocaleString('ru-RU', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit'
-      });
+    const currentDate = new Date()
+    const formattedDate = currentDate.toLocaleString('ru-RU', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+    })
 
-      comments.push({
+    comments.push({
         name: sanitizeHtml(name),
         comment: sanitizeHtml(commentText),
         date: formattedDate,
         quantityLikes: 0,
-        likes: false
-      });
+        likes: false,
+    })
 
-      const newComment = `
+    const newComment = `
           <li class="comment">
             <div class="comment-header">
               <div>${name}</div>
@@ -172,11 +179,10 @@ addButton.addEventListener('click', () => {
               </div>
             </div>
           </li>
-        `;
+        `
 
-    
-      commentsList.innerHTML += newComment;
-      nameInput.value = '';
-      commentInput.value = '';
-      renderComments();
-});
+    commentsList.innerHTML += newComment
+    nameInput.value = ''
+    commentInput.value = ''
+    renderComments()
+})
