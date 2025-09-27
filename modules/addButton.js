@@ -11,37 +11,27 @@ let originalCommentColor = commentInput.style.backgroundColor
 
 export const initButtonComment = () => {
     addButton.addEventListener('click', () => {
-        if (nameInput.value === '') {
-            nameInput.style.backgroundColor = 'red'
-            setTimeout(() => {
-                nameInput.style.backgroundColor = originalNameColor
-            }, 2000)
-            return
-        } else if (commentInput.value === '') {
-            commentInput.style.backgroundColor = 'red'
-            setTimeout(() => {
-                commentInput.style.backgroundColor = originalCommentColor
-            }, 2000)
-            return
-        }
         const trimmedName = nameInput.value.trim()
         const trimmedComment = commentInput.value.trim()
 
-        if (trimmedName === '') {
+        if (!trimmedName) {
             nameInput.style.backgroundColor = 'red'
             setTimeout(() => {
                 nameInput.style.backgroundColor = originalNameColor
             }, 2000)
             return
-        } else if (trimmedComment === '') {
+        }
+
+        if (!trimmedComment) {
             commentInput.style.backgroundColor = 'red'
             setTimeout(() => {
                 commentInput.style.backgroundColor = originalCommentColor
             }, 2000)
             return
         }
-        const name = trimmedName
-        const commentText = trimmedComment
+
+        const name = sanitizeHtml(trimmedName)
+        const commentText = sanitizeHtml(trimmedComment)
 
         const currentDate = new Date()
         const formattedDate = currentDate.toLocaleString('ru-RU', {
@@ -53,8 +43,8 @@ export const initButtonComment = () => {
         })
 
         comments.push({
-            name: sanitizeHtml(name),
-            comment: sanitizeHtml(commentText),
+            name: name,
+            comment: commentText,
             date: formattedDate,
             quantityLikes: 0,
             likes: false,

@@ -1,5 +1,5 @@
 import { renderComments } from './modules/renderComments.js'
-import { initButtonComment } from './modules/EventListener.js'
+import { initButtonComment } from './modules/addButton.js'
 
 renderComments()
 initButtonComment()
