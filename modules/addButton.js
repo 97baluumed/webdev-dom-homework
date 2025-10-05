@@ -72,9 +72,6 @@ export const initButtonComment = () => {
 
         fetch('https://wedev-api.sky.pro/api/v1/maxim-novozhilov/comments', {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
         })
             .then((response) => {
                 return response.json()
