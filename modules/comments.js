@@ -16,11 +16,5 @@ export let comments = [
 ]
 
 export const updateComments = (newComments) => {
-    comments = newComments.map((comment) => ({
-        name: comment.author.name,
-        comment: comment.text,
-        date: comment.date,
-        quantityLikes: comment.likes,
-        likes: comment.isLiked,
-    }))
+    comments = newComments
 }
