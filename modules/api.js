@@ -1,4 +1,3 @@
-// import { renderComments } from './renderComments.js'
 const host = 'https://wedev-api.sky.pro/api/v1/maxim-novozhilov'
 
 export const fetchComments = () => {
@@ -30,7 +29,5 @@ export const postComments = (comment, name) => {
             text: comment,
             name,
         }),
-    }).then(() => {
-        return fetchComments()
     })
 }

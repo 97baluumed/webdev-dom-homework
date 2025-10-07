@@ -1,9 +1,8 @@
 import { renderComments } from './renderComments.js'
 import { updateComments } from './comments.js'
 import { sanitizeHtml } from './sanitize.js'
-import { postComments } from './api.js'
+import { postComments, fetchComments } from './api.js'
 
-// const commentsList = document.querySelector('.comments')
 const addButton = document.querySelector('.add-form-button')
 const nameInput = document.querySelector('.add-form-name')
 const commentInput = document.querySelector('.add-form-text')
@@ -31,47 +30,15 @@ export const initButtonComment = () => {
             return
         }
 
-        postComments(
-            sanitizeHtml(trimmedName),
-            sanitizeHtml(trimmedComment),
-        ).then((data) => {
-            updateComments(data)
-            renderComments()
-            nameInput.value = ''
-            commentInput.value = ''
-        })
-
-        // const name = sanitizeHtml(trimmedName)
-        // const commentText = sanitizeHtml(trimmedComment)
-
-        // const currentDate = new Date()
-        // const formattedDate = currentDate.toLocaleString('ru-RU', {
-        //     year: 'numeric',
-        //     month: '2-digit',
-        //     day: '2-digit',
-        //     hour: '2-digit',
-        //     minute: '2-digit',
-        // })
-
-        // const newComments = {
-        //     name: name,
-        //     text: commentText,
-        // }
-
-        // fetch('https://wedev-api.sky.pro/api/v1/maxim-novozhilov/comments', {
-        //     method: 'POST',
-        //     body: JSON.stringify(newComments),
-        // })
-        //     .then((response) => {
-        //         return response.json()
-        //     })
-        //     .then((data) => {
-        //         updateComments(data.сomments)
-        //         renderComments()
-        //     })
-
-        // commentsList.innerHTML += newComments
-
-        // renderComments()
+        postComments(sanitizeHtml(trimmedName), sanitizeHtml(trimmedComment))
+            .then(() => {
+                return fetchComments()
+            })
+            .then((data) => {
+                updateComments(data)
+                renderComments()
+                nameInput.value = ''
+                commentInput.value = ''
+            })
     })
 }
