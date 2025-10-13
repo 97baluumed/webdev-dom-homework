@@ -32,6 +32,8 @@ export const initButtonComment = () => {
 
         postComments(sanitizeHtml(trimmedName), sanitizeHtml(trimmedComment))
             .then(() => {
+                addButton.ariaDisabled = true
+                addButton.textContent = 'Отправка комментария...'
                 return fetchComments()
             })
             .then((data) => {
@@ -39,6 +41,8 @@ export const initButtonComment = () => {
                 renderComments()
                 nameInput.value = ''
                 commentInput.value = ''
+                addButton.ariaDisabled = false
+                addButton.textContent = 'Написать'
             })
     })
 }
