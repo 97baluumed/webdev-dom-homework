@@ -1,4 +1,4 @@
-const host = 'https://wedev-api.sky.pro/api/v1/maxim-novozhilov'
+const host = 'https://wedev-api.sky.pro/api/v1/maksim-novozhilov'
 
 export const fetchComments = () => {
     return fetch(host + '/comments', {
