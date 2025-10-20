@@ -5,7 +5,14 @@ export const fetchComments = () => {
         method: 'GET',
     })
         .then((response) => {
-            return response.json()
+            if (response.status === 200) {
+                return response.json()
+            } else {
+                if (response.status === 500) {
+                    throw new Error('Ошибка сервера. Попробуйте позже')
+                }
+                throw new Error('Что-то пошло не так')
+            }
         })
         .then((responseData) => {
             const appComments = responseData.comments.map((comment) => {
