@@ -1,11 +1,18 @@
-const host = 'https://wedev-api.sky.pro/api/v1/maksim-novozhilov'
+const host = 'https://wedev-api.sky.pro/api/v1/masim-novozhilov'
 
 export const fetchComments = () => {
     return fetch(host + '/comments', {
         method: 'GET',
     })
         .then((response) => {
-            return response.json()
+            if (response.status === 200) {
+                return response.json()
+            } else {
+                if (response.status === 500) {
+                    throw new Error('Ошибка сервера. Попробуйте позже')
+                }
+                throw new Error('Что-то пошло не так')
+            }
         })
         .then((responseData) => {
             const appComments = responseData.comments.map((comment) => {
@@ -28,6 +35,7 @@ export const postComments = (comment, name) => {
         body: JSON.stringify({
             text: comment,
             name,
+            //forceError: true,
         }),
     })
 }
