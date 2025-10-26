@@ -11,4 +11,4 @@ fetchComments().then((data) => {
     renderComments()
 })
 
-initButtonComment(renderComments)
+initButtonComment()
