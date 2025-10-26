@@ -6,13 +6,13 @@ import { postComments, fetchComments } from './api.js'
 const addButton = document.querySelector('.add-form-button')
 const nameInput = document.querySelector('.add-form-name')
 const commentInput = document.querySelector('.add-form-text')
-let originalNameColor = nameInput.style.backgroundColor
-let originalCommentColor = commentInput.style.backgroundColor
 
 export const initButtonComment = () => {
     addButton.addEventListener('click', () => {
         const trimmedName = nameInput.value.trim()
         const trimmedComment = commentInput.value.trim()
+        let originalNameColor = nameInput.style.backgroundColor
+        let originalCommentColor = commentInput.style.backgroundColor
 
         if (!trimmedName) {
             nameInput.style.backgroundColor = 'red'
