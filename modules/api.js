@@ -1,4 +1,4 @@
-const host = 'https://wedev-api.sky.pro/api/v2/maxim-novozhilov'
+const host = 'https://wedev-api.sky.pro/api/v2/maxxxxxxim-novozhilov'
 const authToken = 'https://wedev-api.sky.pro/api/user'
 
 export let token = ''
@@ -14,9 +14,9 @@ export const updateName = (newName) => {
 export const fetchComments = () => {
     return fetch(host + '/comments', {
         method: 'GET',
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //     Authorization: `Bearer ${token}`,
+        // },
     })
         .then((response) => {
             if (response.status === 200) {

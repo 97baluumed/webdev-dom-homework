@@ -2,10 +2,10 @@ import { comments } from './comments.js'
 import { initLikeComments, initCommentsListener } from './initListeners.js'
 import { renderLogin } from './renderLogin.js'
 import { token, name } from './api.js'
-
-const container = document.querySelector('.container')
+import { initButtonComment } from './addButton.js'
 
 export const renderComments = () => {
+    const container = document.querySelector('.container')
     const commentsHtml = comments
         .map((comment, index) => {
             return `
@@ -56,15 +56,17 @@ export const renderComments = () => {
                 <div class="add-form-row">
                     <button class="add-form-button">Написать</button>
                 </div>
-            </div>`
+            </div>
+            <div class="form-loading" style="display: none; margin-top: 20px">Комментарий добавляется...</div>`
 
-    const linkTologinText = `<p>Чтобы отправить комментарий, <span class="link-login" style="text-decoration: underline; cursor: pointer;">войдите</span></p>`
+    const linkToLoginText = `<p>Чтобы отправить комментарий, <span class="link-login" style="text-decoration: underline; cursor: pointer;">войдите</span></p>`
 
     const baseHtml = `<ul class="comments">${commentsHtml}</ul>
-        ${token ? addCommetnsHtml : linkTologinText}`
+        ${token ? addCommetnsHtml : linkToLoginText}`
 
     container.innerHTML = baseHtml
     if (token) {
+        initButtonComment()
         initLikeComments()
         initCommentsListener()
     } else {

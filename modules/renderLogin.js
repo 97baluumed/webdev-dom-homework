@@ -31,21 +31,21 @@ export const renderLogin = () => {
     container.innerHTML = loginHtml
 
     const loginEl = document.querySelector('#login')
-    const password = document.querySelector('#password')
+    const passwordEl = document.querySelector('#password')
     const submitButtonEl = document.querySelector('.button-main')
 
     submitButtonEl.addEventListener('click', () => {
-        login(loginEl.value, password.value)
+        login(loginEl.value, passwordEl.value)
             .then((response) => {
                 return response.json()
             })
             .then((data) => {
-                updateToken(data.user.token)
-                updateName(data.user.name)
-                fetchComments().then((data) => {
-                    updateComments(data)
-                    renderComments()
-                })
+                ;(updateToken(data.user.token),
+                    updateName(data.user.name),
+                    fetchComments().then((data) => {
+                        updateComments(data)
+                        renderComments()
+                    }))
             })
     })
 }
