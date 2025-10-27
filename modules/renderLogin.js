@@ -12,7 +12,7 @@ export const renderLogin = () => {
                 type="text" 
                 class="add-form-name"
                 placeholder="Введите логин" 
-                id="login"
+                id="login" 
                 required
             />
             <input 
