@@ -65,6 +65,7 @@ export const renderComments = () => {
         ${token ? addCommetnsHtml : linkToLoginText}`
 
     container.innerHTML = baseHtml
+
     if (token) {
         initButtonComment()
         initLikeComments()

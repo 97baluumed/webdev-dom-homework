@@ -40,12 +40,12 @@ export const renderLogin = () => {
                 return response.json()
             })
             .then((data) => {
-                ;(updateToken(data.user.token),
-                    updateName(data.user.name),
-                    fetchComments().then((data) => {
-                        updateComments(data)
-                        renderComments()
-                    }))
+                updateToken(data.user.token)
+                updateName(data.user.name)
+                fetchComments().then((data) => {
+                    updateComments(data)
+                    renderComments()
+                })
             })
     })
 }
