@@ -1,4 +1,4 @@
-const host = 'https://wedev-api.sky.pro/api/v2/maxxxxxxim-novozhilov'
+const host = 'https://wedev-api.sky.pro/api/v2/maxxxxxxxxxxim-novozhilov'
 const authToken = 'https://wedev-api.sky.pro/api/user'
 
 export let token = ''
@@ -53,11 +53,6 @@ export const postComments = (comment, name) => {
             text: comment,
             name,
         }),
-    }).then((response) => {
-        if (response.status === 401) {
-            throw new Error('Вы не прошли авторизацию')
-        }
-        return response.json()
     })
 }
 
