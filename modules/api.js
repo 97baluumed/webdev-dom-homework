@@ -43,15 +43,15 @@ export const fetchComments = () => {
         })
 }
 
-export const postComments = (comment, name) => {
+export const postComments = (name, comment) => {
     return fetch(host + '/comments', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-            text: comment,
             name,
+            text: comment,
         }),
     })
 }
