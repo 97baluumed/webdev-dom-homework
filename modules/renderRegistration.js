@@ -1,15 +1,21 @@
-import { login, updateToken, updateName, fetchComments } from './api.js'
+import { registration, updateToken, updateName, fetchComments } from './api.js'
 import { renderComments } from './renderComments.js'
 import { updateComments } from './comments.js'
-import { renderRegistration } from './renderRegistration.js'
+import { renderLogin } from './renderLogin.js'
 
-export const renderLogin = () => {
+export const renderRegistration = () => {
     const container = document.querySelector('.container')
 
     const loginHtml = `            
         <section class="add-form">
-            <h1>Форма входа</h1>
+            <h1>Форма регистрации</h1>
             <input 
+                type="text" 
+                class="add-form-name"
+                placeholder="Введите Имя" 
+                id="name" 
+                required
+            /><input 
                 type="text" 
                 class="add-form-name"
                 placeholder="Введите логин" 
@@ -24,23 +30,24 @@ export const renderLogin = () => {
                 required
             ></input>
             <fieldset class="add-form-registry">
-                <button class="add-form-button-main button-main" type="submit" style="cursor: pointer;">Войти</button>
-                <u class="add-form-button-link registry" style="text-decoration: underline; cursor: pointer;"> Зарегистрироваться</u>
+                <button class="add-form-button-main button-main" type="submit" style="cursor: pointer;">Зарегистрироваться</button>
+                <u class="add-form-button-link entry" style="text-decoration: underline; cursor: pointer;"> Войти</u>
             </fieldset>
         </section>`
 
     container.innerHTML = loginHtml
 
-    document.querySelector('.registry').addEventListener('click', () => {
-        renderRegistration()
+    document.querySelector('.entry').addEventListener('click', () => {
+        renderLogin()
     })
 
+    const nameEl = document.querySelector('#name')
     const loginEl = document.querySelector('#login')
     const passwordEl = document.querySelector('#password')
     const submitButtonEl = document.querySelector('.button-main')
 
     submitButtonEl.addEventListener('click', () => {
-        login(loginEl.value, passwordEl.value)
+        registration(nameEl.value, loginEl.value, passwordEl.value)
             .then((response) => {
                 return response.json()
             })
