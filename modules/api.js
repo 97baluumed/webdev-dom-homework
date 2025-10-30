@@ -14,9 +14,6 @@ export const updateName = (newName) => {
 export const fetchComments = () => {
     return fetch(host + '/comments', {
         method: 'GET',
-        // headers: {
-        //     Authorization: `Bearer ${token}`,
-        // },
     })
         .then((response) => {
             if (response.status === 200) {

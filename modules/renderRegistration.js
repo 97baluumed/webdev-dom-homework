@@ -49,7 +49,18 @@ export const renderRegistration = () => {
     submitButtonEl.addEventListener('click', () => {
         registration(nameEl.value, loginEl.value, passwordEl.value)
             .then((response) => {
-                return response.json()
+                if (response.status === 201) {
+                    return response.json()
+                } else {
+                    if (response.status === 400) {
+                        throw new Error(
+                            'Пользователь с таким логином уже существует',
+                        )
+                    }
+                    throw new Error(
+                        'Не верно введены данные. Проверьте еще раз и попробуйте снова',
+                    )
+                }
             })
             .then((data) => {
                 updateToken(data.user.token)
@@ -58,6 +69,9 @@ export const renderRegistration = () => {
                     updateComments(data)
                     renderComments()
                 })
+            })
+            .catch((error) => {
+                alert(error.message)
             })
     })
 }

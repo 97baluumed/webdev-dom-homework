@@ -42,7 +42,16 @@ export const renderLogin = () => {
     submitButtonEl.addEventListener('click', () => {
         login(loginEl.value, passwordEl.value)
             .then((response) => {
-                return response.json()
+                if (response.status === 201) {
+                    return response.json()
+                } else {
+                    if (response.status === 400) {
+                        throw new Error('Неверный логин или пароль')
+                    }
+                    throw new Error(
+                        'Не верно введены логин или пароль. Проверьте еще раз и попробуйте снова',
+                    )
+                }
             })
             .then((data) => {
                 updateToken(data.user.token)
@@ -51,6 +60,9 @@ export const renderLogin = () => {
                     updateComments(data)
                     renderComments()
                 })
+            })
+            .catch((error) => {
+                alert(error.message)
             })
     })
 }
