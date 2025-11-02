@@ -1,8 +1,6 @@
 import { renderComments } from './renderComments.js'
 import { comments } from './comments.js'
 
-const commentInput = document.querySelector('.add-form-text')
-
 export const initLikeComments = () => {
     for (const likeElement of document.querySelectorAll('.like-button')) {
         const index = likeElement.dataset.index
@@ -36,11 +34,15 @@ export const initCommentsListener = () => {
     for (const commentElement of commentsElements) {
         commentElement.addEventListener('click', (event) => {
             if (event.target.closest('.like-button')) return
+
             const commentText =
                 commentElement.querySelector('.comment-text').innerText
             const commentName = commentElement.querySelector(
                 '.comment-header div:first-child',
             ).innerText
+
+            const commentInput = document.querySelector('.add-form-text')
+            if (!commentInput) return
 
             commentInput.value = `Ответ пользователю ${commentName}: ${commentText} > `
         })

@@ -3,16 +3,16 @@ import { updateComments } from './comments.js'
 import { sanitizeHtml } from './sanitize.js'
 import { postComments, fetchComments } from './api.js'
 
-const addButton = document.querySelector('.add-form-button')
-const nameInput = document.querySelector('.add-form-name')
-const commentInput = document.querySelector('.add-form-text')
-let originalNameColor = nameInput.style.backgroundColor
-let originalCommentColor = commentInput.style.backgroundColor
-
 export const initButtonComment = () => {
+    const addButton = document.querySelector('.add-form-button')
+
     addButton.addEventListener('click', () => {
+        const nameInput = document.querySelector('.add-form-name')
+        const commentInput = document.querySelector('.add-form-text')
         const trimmedName = nameInput.value.trim()
         const trimmedComment = commentInput.value.trim()
+        let originalNameColor = nameInput.style.backgroundColor
+        let originalCommentColor = commentInput.style.backgroundColor
 
         if (!trimmedName) {
             nameInput.style.backgroundColor = 'red'
@@ -43,7 +43,7 @@ export const initButtonComment = () => {
                     if (response.status === 500) {
                         throw new Error('Ошибка сервера. Попробуйте позже')
                     }
-                    throw new Error('Что-то пошло не так')
+                    throw new Error('Что-то пошло не так!')
                 }
             })
             .then(() => {

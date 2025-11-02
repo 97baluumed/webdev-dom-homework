@@ -1,9 +1,11 @@
 import { comments } from './comments.js'
 import { initLikeComments, initCommentsListener } from './initListeners.js'
-
-const commentsList = document.querySelector('.comments')
+import { renderLogin } from './renderLogin.js'
+import { token, name } from './api.js'
+import { initButtonComment } from './addButton.js'
 
 export const renderComments = () => {
+    const container = document.querySelector('.container')
     const commentsHtml = comments
         .map((comment, index) => {
             return `
@@ -34,7 +36,43 @@ export const renderComments = () => {
         })
         .join('')
 
-    commentsList.innerHTML = commentsHtml
-    initLikeComments()
-    initCommentsListener()
+    const addCommetnsHtml = `
+            <div class="add-form">
+                <input
+                    type="text"
+                    class="add-form-name"
+                    placeholder="Введите ваше имя"
+                    readonly
+                    value="${name}"
+                    id="name-input"
+                />
+                <textarea
+                    type="textarea"
+                    class="add-form-text"
+                    placeholder="Введите ваш коментарий"
+                    rows="4"
+                    id="text-input"
+                ></textarea>
+                <div class="add-form-row">
+                    <button class="add-form-button">Написать</button>
+                </div>
+            </div>
+            <div class="form-loading" style="display: none; margin-top: 20px">Комментарий добавляется...</div>`
+
+    const linkToLoginText = `<p>Чтобы отправить комментарий, <span class="link-login" style="text-decoration: underline; cursor: pointer;">войдите</span></p>`
+
+    const baseHtml = `<ul class="comments">${commentsHtml}</ul>
+        ${token ? addCommetnsHtml : linkToLoginText}`
+
+    container.innerHTML = baseHtml
+
+    if (token) {
+        initButtonComment()
+        initLikeComments()
+        initCommentsListener()
+    } else {
+        document.querySelector('.link-login').addEventListener('click', () => {
+            renderLogin()
+        })
+    }
 }
