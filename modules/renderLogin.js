@@ -1,7 +1,6 @@
-import { login, updateToken, updateName, fetchComments } from './api.js'
-import { renderComments } from './renderComments.js'
-import { updateComments } from './comments.js'
+import { login, updateToken, updateName } from './api.js'
 import { renderRegistration } from './renderRegistration.js'
+import { fetchAndRenderComments } from '../index.js'
 
 export const renderLogin = () => {
     const container = document.querySelector('.container')
@@ -56,10 +55,7 @@ export const renderLogin = () => {
             .then((data) => {
                 updateToken(data.user.token)
                 updateName(data.user.name)
-                fetchComments().then((data) => {
-                    updateComments(data)
-                    renderComments()
-                })
+                fetchAndRenderComments()
             })
             .catch((error) => {
                 alert(error.message)

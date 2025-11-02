@@ -6,9 +6,17 @@ import { fetchComments } from './modules/api.js'
 document.querySelector('.container').innerHTML =
     'Комментарии загружаются. Пожалуйста подождите...'
 
-fetchComments().then((data) => {
-    updateComments(data)
-    renderComments()
-})
+export const fetchAndRenderComments = () => {
+    fetchComments().then((data) => {
+        updateComments(data)
+        renderComments()
+    })
+}
+fetchAndRenderComments()
+
+// fetchComments().then((data) => {
+//     updateComments(data)
+//     renderComments()
+// })
 
 // initButtonComment()
